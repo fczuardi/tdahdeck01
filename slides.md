@@ -1,0 +1,177 @@
+class: center, middle, inverse
+
+# TDAH Talks 2016 - E01
+## Fabricio C Zuardi (@fczuardi)
+### Assunto: Currying
+
+---
+class: center, middle, inverse
+
+# Currying
+
+???
+Muitos de vocês ja devem estar cansados de saber do tema que vou falar, por favor tenham paciência que vai acabar rápido.
+---
+
+class: center
+
+# Curry
+
+![curry-powder-590](https://c3.staticflickr.com/9/8018/7268299146_08472408a7_z.jpg)
+
+.left[.footnote[
+    photo: [curry-powder-590 by Oregon State University](https://www.flickr.com/photos/oregonstateuniversity/7268299146)
+]]
+---
+class: center
+
+# Curry
+
+![Haskell Brooks Curry](http://www-history.mcs.st-and.ac.uk/BigPictures/Curry.jpeg)
+
+.left[.footnote[
+    photo: [MacTutor History of Mathematics archive](http://www-history.mcs.st-and.ac.uk/Posters2/Curry.html)
+]]
+
+---
+
+class: inverse, center, middle
+
+# Haskell B. Curry
+
+> There are three programming languages named after him, Haskell, Brook and Curry, as well as the concept of currying, a technique used for transforming functions in mathematics and computer science.
+.left[.footnote[
+    source: [Haskell_Curry @ Wikipedia](https://en.wikipedia.org/wiki/Haskell_Curry)
+]]
+---
+
+# Currying is…
+
+> "…the technique of translating the evaluation of a function that takes multiple arguments (or a tuple of arguments) into evaluating a sequence of functions, each with a single argument. It was introduced by Gottlob Frege, developed by Moses Schönfinkel, and further developed by Haskell Curry."
+-- Wikipedia
+
+.left[.footnote[
+    source: [Currying - Wikipedia](https://en.wikipedia.org/wiki/Currying)
+]]
+
+---
+# Currying is…
+
+> "…the process of transforming a function that takes multiple arguments into a function that takes just a single argument and returns another function if any arguments are still needed."
+-- Haskell Wiki
+
+.left[.footnote[
+    source: [Currying - Haskell Wiki](https://wiki.haskell.org/Currying)
+]]
+
+---
+class: inverse, center, middle
+# …a technique for postponing a problem.
+
+"…um jeito de empurrar problemas pra frente."
+
+---
+class: centered, middle
+# Curried function
+
+> "A function that will return a new function until it receives all it's arguments"
+-- Brian Lonsdorf
+
+.left[.footnote[
+    source: [Hey Underscore, You're Doing It Wrong!](https://youtu.be/m3svKOdZijA?t=2m40s)
+]]
+
+
+---
+class: centered, middle
+# Partially-aplied function
+
+> "A function that will return a new function until it receives all it's arguments"
+-- Brian Lonsdorf
+
+.left[.footnote[
+    source: [Hey Underscore, You're Doing It Wrong!](https://youtu.be/m3svKOdZijA?t=2m40s)
+]]
+
+---
+
+# Example (javascript)
+```javascript
+const sumAB = function (a, b) {
+  return a + b;
+}
+sumAB(1, 2); // 3
+```
+
+---
+# Example (javascript)
+```javascript
+const curriedSumAB = function (a) {
+  return function (b) {
+    return a + b;
+  }
+}
+curriedSumAB(3)(4); //7
+```
+
+---
+
+# Example (javascript)
+```javascript
+const sumAB = (a, b) => a + b;
+sumAB(1, 2); // 3
+
+const curriedSumAB = (a) => (b) => a + b;
+curriedSumAB(3)(4); //7
+curriedSumAB(1)(1); //2
+```
+
+---
+class: inverse, middle, center
+# (0)(0)
+
+---
+class: inverse, middle, center
+# wtf(0)(0)
+
+---
+# Example step-by-step (javascript)
+
+``` javascript
+const curriedSumAB = (a) => ((b) => a + b);
+const sum3 = curriedSumAB(3);
+typeof sum3; // function
+sum3; // function (b) { return a + b;  }
+sum3(4); // 7
+```
+
+---
+# curry (Ramda.js)
+
+Returns a curried equivalent of the provided function. The curried function has two unusual capabilities. First, its arguments needn't be provided one at a time. If f is a ternary function and g is R.curry(f), the following are equivalent:
+
+- g(1)(2)(3)
+- g(1)(2, 3)
+- g(1, 2)(3)
+- g(1, 2, 3)
+
+---
+# curriedSumAB (Ramda.js)
+```javascript
+const sumAB = (a, b) => a + b;
+const curriedSumAB = curry(sumAB);
+
+curriedSumAB(1, 2)
+curriedSumAB(3, 4)
+curriedSumAB(3)
+```
+
+---
+class: inverse, middle, center
+# E pq isso é útil?
+---
+class: inverse, middle, center
+# Function Composition
+---
+class: inverse, middle, center
+# Obrigado!
