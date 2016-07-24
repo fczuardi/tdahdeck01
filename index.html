@@ -133,7 +133,8 @@ class: center, middle, inverse
 # Currying
 
 ???
-Muitos de vocês ja devem estar cansados de saber do tema que vou falar, por favor tenham paciência que vai acabar rápido.
+Muitos de vocês ja devem estar cansados de saber do tema que vou falar, por favor tenham paciência que vai acabar rápido e pode servir para atiçar a curiosidade
+dos que ainda não trombaram com o tema.
 ---
 
 class: center
@@ -145,6 +146,12 @@ class: center
 .left[.footnote[
     photo: [curry-powder-590 by Oregon State University](https://www.flickr.com/photos/oregonstateuniversity/7268299146)
 ]]
+
+???
+Uma apresentação sobre currying não pode começar sem uma referencia ao tempero
+ou piadinha sem graça do tipo, pois bem. Eu adoro o tempero Curry, mas não é
+disso que vamos falar.
+
 ---
 class: center
 
@@ -156,16 +163,23 @@ class: center
     photo: [MacTutor History of Mathematics archive](http://www-history.mcs.st-and.ac.uk/Posters2/Curry.html)
 ]]
 
+???
+O Curry que da origem ao termo Currying é esta pessoa aqui…
 ---
 
 class: inverse, center, middle
 
-# Haskell B. Curry
+# Haskell Brook Curry
 
 > There are three programming languages named after him, Haskell, Brook and Curry, as well as the concept of currying, a technique used for transforming functions in mathematics and computer science.
 .left[.footnote[
     source: [Haskell_Curry @ Wikipedia](https://en.wikipedia.org/wiki/Haskell_Curry)
 ]]
+
+???
+Haskell Brook Curry, um matemático americano que deve ter contribuido bastante com
+o campo, pois muita gente o referencia e o homenageia apelidando tecnicas e linguagens
+de computação com partes do seu nome.
 ---
 
 # Currying is…
@@ -177,6 +191,10 @@ class: inverse, center, middle
     source: [Currying - Wikipedia](https://en.wikipedia.org/wiki/Currying)
 ]]
 
+???
+Enfim, o que é Currying?
+Segundo a Wikipedia, é a técnica de traduzir uma função de múltiplos parâmetro
+em uma seqüência de funções cada uma recebendo um único parametro.
 ---
 # Currying is…
 
@@ -187,12 +205,20 @@ class: inverse, center, middle
     source: [Currying - Haskell Wiki](https://wiki.haskell.org/Currying)
 ]]
 
+???
+Ou, segundo a Wiki da linguagem de programação Haskell: é o processo de transformar uma função que recebe múltiplos parametros em uma função que recebe apenas um, e
+que retorna outra função como resultado, até que se acabem os parâmetros.
 ---
 class: inverse, center, middle
 # …a technique for postponing a problem.
 
 "…um jeito de empurrar problemas pra frente."
 
+???
+Eu gosto de resumir Currying como "uma técnica de empurrar problemas para frente".
+É um jeito de você atacar um problema grande por partes, se preocupando com uma
+coisa de cada vez… (e ao fazer isso, acabar com varias funcões pequenas potencialmente
+reusáveis)
 ---
 class: centered, middle
 # Curried function
@@ -204,6 +230,12 @@ class: centered, middle
     source: [Hey Underscore, You're Doing It Wrong!](https://youtu.be/m3svKOdZijA?t=2m40s)
 ]]
 
+???
+O que é uma "curried function" então? é uma função que retornará uma
+nova função até que o último parametro seja passado.
+
+Uma função que retorna como resultado outra função pode ser chamada de
+High Order Function.
 
 ---
 class: centered, middle
@@ -216,6 +248,9 @@ class: centered, middle
     source: [Hey Underscore, You're Doing It Wrong!](https://youtu.be/m3svKOdZijA?t=2m40s)
 ]]
 
+???
+É comum ouvir o termo Currying sendo usado também como sinônimo de "Partially-aplied functions", no sentido mais genérico de funções que podem ser chamadas com apenas
+partes dos parametros preenchidos.
 ---
 
 # Example (javascript)
@@ -226,6 +261,11 @@ const sumAB = function (a, b) {
 sumAB(1, 2); // 3
 ```
 
+???
+Muito bem, vamos aos exemplos:
+
+Aqui, temos uma função em javascript que recebe dois parametros: A e B
+e retorna a soma de A com B.
 ---
 # Example (javascript)
 ```javascript
@@ -237,6 +277,13 @@ const curriedSumAB = function (a) {
 curriedSumAB(3)(4); //7
 ```
 
+???
+A versão "Curried" desta função em javascript ficaria assim:
+uma função que recebe o parametro A, e retorna uma função que recebe o parametro B
+e que retorna a soma de B com A.
+
+Para obter o resultado de A mais B chamamos a primeira passando A e depois chamamos
+a função retornada passando B.
 ---
 
 # Example (javascript)
@@ -249,14 +296,23 @@ curriedSumAB(3)(4); //7
 curriedSumAB(1)(1); //2
 ```
 
+???
+Ainda em javascript, podemos reescrever os exemplos anteriores usando fat arrow
+desta forma.
+
+Comparando a chamada da função "normal" e a curried, vemos esta coisa estranha...
 ---
 class: inverse, middle, center
 # (0)(0)
 
+???
+Esta bundinha.
 ---
 class: inverse, middle, center
 # wtf(0)(0)
 
+???
+What the fuck!
 ---
 # Example step-by-step (javascript)
 
@@ -268,6 +324,9 @@ sum3; // function (b) { return a + b;  }
 sum3(4); // 7
 ```
 
+???
+É normal achar esquisito num primeiro contato...
+Aqui vai um exemplo mais passo-a-passo da mesma função.
 ---
 # curry (Ramda.js)
 
@@ -278,6 +337,14 @@ Returns a curried equivalent of the provided function. The curried function has 
 - g(1, 2)(3)
 - g(1, 2, 3)
 
+???
+Algumas bibliotecas de funções utilitárias, como a Lodash e a Ramda, possuem uma função
+que economiza o trabalho de desmenbrar uma função de multiplos parametros em uma
+que aceita menos parametros e que retorna uma função que espera os parametros
+restantes.
+
+Na Ramda esta função chama curry, no slide está a descrição copiada da página de
+documentação.
 ---
 # curriedSumAB (Ramda.js)
 ```javascript
@@ -286,15 +353,30 @@ const curriedSumAB = curry(sumAB);
 
 curriedSumAB(1, 2)
 curriedSumAB(3, 4)
-curriedSumAB(3)
+curriedSumAB(3)(4)
 ```
 
+???
+Finalmente, utilizando a ajuda da Rambda, poderiamos transformar a função sumAB
+tradicional que recebe 2 parametros, na sua equivalente "curried" assim.
+
+A versão curried gerada pelo curry da Ramda aceita ser executada tanto com 1
+quanto com 2 parametros, retornando o resultado ou outra função dependendo
+do numero de parametros passados. O curry do Ramda é um jeito de tornar funcoes
+normais em funcoes "auto-curried".
 ---
 class: inverse, middle, center
 # E pq isso é útil?
+
+???
+E você pode estar se perguntando, mas para que isso é útil?
 ---
 class: inverse, middle, center
 # Function Composition
+
+???
+A resposta fica como exercício, mas, entre outras coisas, currying é útil para
+composição de funcões. Que é uma arte belíssima.
 ---
 class: inverse, middle, center
 # Obrigado!
